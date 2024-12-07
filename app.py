@@ -2,6 +2,20 @@ import streamlit as st
 import pickle
 import pandas as pd
 import requests
+import os
+
+# Function to download the similarity.pkl file dynamically
+def download_similarity_file():
+    file_url = "https://drive.google.com/uc?id=1KwOkNv0m6dtHulj-_dz_iOqZL0zu13ZC"
+    file_name = "similarity.pkl"
+    if not os.path.exists(file_name):
+        with st.spinner("Downloading similarity data..."):
+            response = requests.get(file_url)
+            with open(file_name, "wb") as f:
+                f.write(response.content)
+
+# Download the file if not present
+download_similarity_file()
 
 # Load data
 movies_dict = pickle.load(open('movies_dict.pkl', 'rb'))
